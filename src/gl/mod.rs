@@ -17,7 +17,7 @@ mod vbo;
 
 pub fn clear(c: &color::Color, gl: &Gl) {
     unsafe {
-        gl.ClearColor(c.r(), c.g(), c.b(), c.a());
+        gl.ClearColor(c.r_f32(), c.g_f32(), c.b_f32(), c.a_f32());
         gl.Clear(DEPTH_BUFFER_BIT | crate::gl::COLOR_BUFFER_BIT);
     }
 }

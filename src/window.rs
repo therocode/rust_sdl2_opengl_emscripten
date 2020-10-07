@@ -14,8 +14,10 @@ pub enum GlProfile {
 
 impl GlWindow {
     pub fn new(title: &str, size: glm::UVec2, profile: GlProfile) -> anyhow::Result<Self> {
+        // Initialize SDL
         let sdl = sdl2::init().map_err(|e| anyhow!(e))?;
 
+        // Setup the video subsystem
         let video = sdl.video().map_err(|e| anyhow!(e))?;
 
         let context_params = match profile {
@@ -27,6 +29,7 @@ impl GlWindow {
         video.gl_attr().set_context_major_version(context_params.1);
         video.gl_attr().set_context_minor_version(context_params.2);
 
+        // Create a window
         let mut window = video
             .window(title, size.x, size.y)
             .resizable()
@@ -34,10 +37,12 @@ impl GlWindow {
             .position_centered()
             .build()?;
 
+        // Create an OpenGL context
         let gl_context = window.gl_create_context().map_err(|e| anyhow!(e))?;
 
         assert!(gl_context.is_current()); //don't think this should ever happen
 
+        // Load the OpenGL API library
         let gl = std::rc::Rc::new(crate::gl::Gl::load_with(|s| {
             video.gl_get_proc_address(s) as *const _
         }));

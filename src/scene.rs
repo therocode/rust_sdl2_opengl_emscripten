@@ -5,12 +5,18 @@ use rand::Rng;
 use crate::gl;
 
 pub struct Scene {
+    /// Defines how we are looking at the scene
     camera: gl::Camera,
+    /// The color to which the background is cleared at the start of the frame
     bg_color: gl::Color,
+    /// The color of the triangle
     triangle_color: gl::Color,
+    /// The current angle position of the triangle as it rotates around the center
     triangle_rotation: f32,
+    /// The speed at which the above angle position changes each frame
     rotational_speed: f32,
 
+    // GL resources
     shader: gl::Shader,
     vao: gl::Vao,
     triangle_positions_vbo: gl::ArrayVbo,
@@ -19,6 +25,7 @@ pub struct Scene {
 
 impl Scene {
     pub fn new(gl: Rc<gl::Gl>, window_size: glm::UVec2) -> Self {
+        // Plain orthographic camera
         let camera = gl::Camera::new(gl::Projection::new_orthographic(
             glm::convert(window_size),
             1.0,
@@ -26,6 +33,7 @@ impl Scene {
             100.0,
         ));
 
+        // One VBO for the position attribute, one for the colors
         let triangle_positions_vbo = gl::ArrayVbo::new(gl.clone());
         let triangle_colors_vbo = gl::ArrayVbo::new(gl.clone());
 
@@ -100,6 +108,7 @@ impl Scene {
         self.rotational_speed = rng.gen_range(-0.05, 0.05);
     }
     pub fn update(&mut self) {
+        // Advance rotation by rotational speed
         self.triangle_rotation += self.rotational_speed;
     }
     pub fn render(&self, gl: &gl::Gl) {

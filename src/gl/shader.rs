@@ -7,6 +7,7 @@ pub struct Shader {
     pub fragment_gl_handle: types::GLuint,
     pub vertex_source: String,
     pub fragment_source: String,
+    /// Store a Rc to the Gl instance to ensure that we can destroy this resource when dropped
     gl: std::rc::Rc<Gl>,
 }
 

@@ -9,5 +9,6 @@ mod window;
 fn main() {
     let game = game::Game::new().unwrap();
 
+    // Start the main looping
     emscripten_main_loop::run(game);
 }

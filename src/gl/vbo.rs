@@ -2,6 +2,7 @@ use super::*;
 
 pub struct ArrayVbo {
     gl_handle: u32,
+    /// Store a Rc to the Gl instance to ensure that we can destroy this resource when dropped
     gl: std::rc::Rc<Gl>,
 }
 
