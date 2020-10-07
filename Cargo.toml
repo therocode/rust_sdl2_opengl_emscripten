@@ -1,0 +1,24 @@
+[package]
+authors = ["Tobias Widlund <widlundtobias@gmail.com>"]
+edition = "2018"
+name = "rust_sdl2_opengl_emscripten"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0"
+emscripten_main_loop = "0.1"
+nalgebra-glm = "0.8"
+rand = "0.7"
+sdl2 = {version = "0.33", features = ["bundled"]}
+#[target.'cfg(not(target_os = "windows"))'.dependencies.sdl2]
+#features = []
+#version = "0.33"
+
+#[target.'cfg(target_os = "windows")'.dependencies.sdl2]
+#features = ["bundled"]
+#version = "0.33"
+
+[build-dependencies]
+gl_generator = "0.14"
