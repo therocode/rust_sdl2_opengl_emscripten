@@ -9,13 +9,15 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new() -> Result<Self, ()> {
-        let window_size = glm::vec2(800, 600);
-        let window =
-            window::GlWindow::new("Triangle Spinner", window_size, window::GlProfile::ES3).unwrap();
+    pub fn new() -> Result<Self, anyhow::Error> {
+        // Load window title from file just to show that it works to load files in the Emscripten builds
+        let title = std::fs::read_to_string("title.txt")?;
+
+        let size = glm::vec2(800, 600);
+        let window = window::GlWindow::new(&title, size, window::GlProfile::ES3)?;
 
         // Pass in an Rc of Gl to the scene so that it can create the Gl entities required
-        let scene = scene::Scene::new(window.gl.clone(), window_size);
+        let scene = scene::Scene::new(window.gl.clone(), size);
 
         Ok(Self { window, scene })
     }
