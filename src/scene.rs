@@ -7,6 +7,7 @@ use crate::gl;
 pub struct Scene {
     /// Defines how we are looking at the scene
     camera: gl::Camera,
+    view_size: glm::UVec2,
     /// The color to which the background is cleared at the start of the frame
     bg_color: gl::Color,
     /// The color of the triangle
@@ -67,6 +68,7 @@ impl Scene {
 
         let mut res = Self {
             camera,
+            view_size: window_size,
             bg_color: gl::Color {
                 r: 0,
                 g: 0,
@@ -91,6 +93,12 @@ impl Scene {
 
         res
     }
+    pub fn resize_view(&mut self, size: glm::UVec2) {
+        if let Some(orth) = self.camera.projection.as_orthographic_mut() {
+            orth.size = glm::convert(size);
+        }
+        self.view_size = size;
+    }
     pub fn randomize(&mut self) {
         let rng = &mut rand::thread_rng();
         self.triangle_color = gl::Color {
@@ -113,6 +121,7 @@ impl Scene {
     }
     pub fn render(&self, gl: &gl::Gl) {
         // Clear the window
+        gl::resize_viewport(&self.view_size, gl);
         gl::clear(&self.bg_color, gl);
 
         // Bind gl entities

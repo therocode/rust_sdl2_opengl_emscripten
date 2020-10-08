@@ -34,6 +34,11 @@ impl emscripten_main_loop::MainLoop for Game {
                     scancode: Some(Scancode::Q),
                     ..
                 } => return emscripten_main_loop::MainLoopEvent::Terminate,
+                // Handle window resize
+                sdl2::event::Event::Window {
+                    win_event: sdl2::event::WindowEvent::SizeChanged(x, y),
+                    ..
+                } => self.scene.resize_view(glm::vec2(x as u32, y as u32)),
                 // Randomize the scene if the user presses Space
                 Event::KeyDown {
                     scancode: Some(Scancode::Space),

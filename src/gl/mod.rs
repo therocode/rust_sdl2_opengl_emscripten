@@ -21,6 +21,11 @@ pub fn clear(c: &color::Color, gl: &Gl) {
         gl.Clear(DEPTH_BUFFER_BIT | crate::gl::COLOR_BUFFER_BIT);
     }
 }
+pub fn resize_viewport(size: &glm::UVec2, gl: &Gl) {
+    unsafe {
+        gl.Viewport(0, 0, size.x as i32, size.y as i32);
+    }
+}
 
 pub fn draw_arrays(vertex_count: i32, gl: &Gl) {
     unsafe {
