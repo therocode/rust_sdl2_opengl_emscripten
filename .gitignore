@@ -15,3 +15,6 @@ Cargo.lock
 **/msvc/lib/*
 **/gnu-mingw/dll/*
 **/gnu-mingw/lib/*
+
+# VS Code
+*.code-workspace
