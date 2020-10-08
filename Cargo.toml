@@ -11,14 +11,7 @@ anyhow = "1.0"
 emscripten_main_loop = "0.1"
 nalgebra-glm = "0.8"
 rand = "0.7"
-sdl2 = {version = "0.33", features = ["bundled"]}
-#[target.'cfg(not(target_os = "windows"))'.dependencies.sdl2]
-#features = []
-#version = "0.33"
-
-#[target.'cfg(target_os = "windows")'.dependencies.sdl2]
-#features = ["bundled"]
-#version = "0.33"
+sdl2 = "0.34"
 
 [build-dependencies]
 gl_generator = "0.14"
